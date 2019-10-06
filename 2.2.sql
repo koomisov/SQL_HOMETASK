@@ -8,8 +8,10 @@ CREATE TABLE Cities (
 );
 
 
+CREATE SEQUENCE Univer_seq INCREMENT BY 2 START WITH 1;
+
 CREATE TABLE Universities (
-    University_ID SMALLSERIAL PRIMARY KEY,
+    University_ID SMALLINT PRIMARY KEY DEFAULT nextval('Univer_seq'),
     University_name Varchar(50) NOT NULL UNIQUE,
     City_ID SMALLINT REFERENCES Cities (City_ID) ON DELETE SET NULL ON UPDATE CASCADE
 );
@@ -68,7 +70,7 @@ CREATE TABLE KVN_Events (
 CREATE TABLE Teams_events (
     Team_ID SMALLINT REFERENCES Teams (Team_ID) ON DELETE CASCADE ON UPDATE CASCADE,
     Event_ID SMALLINT REFERENCES KVN_Events (Event_ID) ON DELETE CASCADE ON UPDATE CASCADE,
-    Integral_jury_score NUMERIC(1, 1) DEFAULT 0.0 CONSTRAINT jury_score_range CHECK (Integral_jury_score >= 0 AND Integral_jury_score <= 10),
+    Integral_jury_score double precision DEFAULT 0.0 CONSTRAINT jury_score_range CHECK (Integral_jury_score >= 0 AND Integral_jury_score <= 10),
     PRIMARY KEY (Team_ID, Event_ID)
 );
 
@@ -101,7 +103,7 @@ CREATE TABLE Scores (
 CREATE TABLE Jury_results (
     User_ID SMALLINT REFERENCES Users (User_ID) ON DELETE CASCADE ON UPDATE CASCADE,
     Team_ID SMALLINT,
-    Event_ID SMALLINT DEFAULT 0, 
+    Event_ID SMALLINT, 
     J_score SMALLINT NOT NULL,
     PRIMARY KEY (User_ID, Team_ID, Event_ID)
 );
