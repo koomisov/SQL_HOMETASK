@@ -244,7 +244,7 @@ INSERT INTO Games (Game_ID, Game_name, League_name, Date_game, Place_ID, Next_ga
     (7, 'Четвертьфинал 3', 'Российская лига', '20/10/2019', 2, 9),
     (8, 'Четвертьфинал 4', 'Российская лига', '25/10/2019', 6, 9),
     (9, 'Полуфинал 1', 'Российская лига', '01/12/2019', 1, 11),
-    (10, 'Полуфинал 1', 'Российская лига', '15/12/2019', 1, 11),
+    (10, 'Полуфинал 2', 'Российская лига', '15/12/2019', 1, 11),
     (11, 'Финал', 'Российская лига', '31/12/2019', 1, NULL);
     
 
@@ -367,4 +367,19 @@ INSERT INTO Scores (Score_ID, Score, User_ID, Event_ID) VALUES
  
 INSERT INTO Jury_results (User_ID, Team_ID, Event_ID, J_score) VALUES
     (2, 1, 10, 10),
-    (7, 1, 10, 10);
+    (7, 1, 10, 10),
+    (3, 1, 1, 5);
+ 
+ 
+ 
+UPDATE Teams_events SET Integral_jury_score = New_table.averg
+FROM 
+
+(SELECT Team_ID, Event_ID, ROUND(AVG(J_score), 1) AS averg 
+FROM Jury_results GROUP BY Team_ID, Event_ID) AS New_table
+
+WHERE Teams_events.Team_ID = New_table.Team_ID
+AND Teams_events.Event_ID = New_table.Event_ID;
+
+
+SELECT * FROM Teams_events;
