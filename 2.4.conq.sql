@@ -31,11 +31,12 @@ COMMIT;
 
 
 BEGIN TRANSACTION ISOLATION LEVEL READ COMMITTED;
+SELECT * FROM Scores;
 => BEGIN TRANSACTION ISOLATION LEVEL READ COMMITTED;
 UPDATE SCORES SET score = score - 2 WHERE Score_ID = 3;
 => SELECT Score FROM Scores WHERE Score_ID = 3; // При грязном чтении увидели бы 7, а не 9;
 COMMIT;
-=> COMMIT;
+=> rollback;
 
 
 
@@ -54,8 +55,10 @@ SELECT Score FROM Scores WHERE Score_ID = 3;
 SELECT Score FROM Scores WHERE Score_ID = 3;
 COMMIT;
 
+
+
 IF (SELECT Score FROM Scores WHERE Score_ID = 3) == 9 THEN
-    | Вклиниваемся
+    | => Вклиниваемся
     |
     UPDATE SCORES SET score = score - 2 WHERE Score_ID = 3;;
 END IF;

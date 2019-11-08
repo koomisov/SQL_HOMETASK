@@ -1,0 +1,10 @@
+[error] /home/ivan/Desktop/SQL_prak/Fill_in_sql.scala/project/Main.scala:3:19: object tototoshi is not a member of package com.github
+[error] import com.github.tototoshi.csv._
+[error]                   ^
+[error] /home/ivan/Desktop/SQL_prak/Fill_in_sql.scala/project/Main.scala:13:54: not found: value file
+[error]   val outputFile = new BufferedWriter(new FileWriter(file))
+[error]                                                      ^
+[error] /home/ivan/Desktop/SQL_prak/Fill_in_sql.scala/project/Main.scala:15:23: not found: type CSVWriter
+[error]   val csvWriter = new CSVWriter(outputFile)
+[error]                       ^
+[error] three errors found

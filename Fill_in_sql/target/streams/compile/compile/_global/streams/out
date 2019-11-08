@@ -1,0 +1,6 @@
+[0m[[0m[31merror[0m] [0m[0m/home/ivan/Desktop/SQL_prak/Fill_in_sql/src/main/scala/Main.scala:74:26: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Int[0m
+[0m[[0m[31merror[0m] [0m[0m required: Boolean[0m
+[0m[[0m[31merror[0m] [0m[0m      if (events_array(i)(1)) events_array(i)(0) / events_array(i)(1) else 0.0,[0m
+[0m[[0m[31merror[0m] [0m[0m                         ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

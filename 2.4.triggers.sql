@@ -44,7 +44,11 @@ FOR EACH ROW EXECUTE FUNCTION aver_fill();
 CREATE FUNCTION prohibit_change() RETURNS trigger AS $prohibit_change$
     BEGIN
         RAISE NOTICE 'Don`t touch it';
-        RETURN NULL;
+        IF (TG_OP = 'DELETE') THEN
+            RETURN OLD;
+        ELSE 
+            RETURN NEW;
+        END IF;
     END;
 $prohibit_change$ LANGUAGE plpgsql;
 
