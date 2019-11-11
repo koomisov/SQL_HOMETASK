@@ -13,7 +13,7 @@ object Main extends App {
   val faker = new Faker
 
   //scores.csv
-  val f1 = new File("/home/ivan/Desktop/SQL_prak/scores.csv")
+  val f1 = new File("/home/ivan/Desktop/SQL_prak/scores1.csv")
   val writer1 = CSVWriter.open(f1)
   //val csvSchema = Array("Score_ID", "Score", "USER_ID", "Event_ID", "Comments")
 
@@ -44,16 +44,17 @@ object Main extends App {
   //users.csv
   //val csvSchema = Array(User_ID, First_name, Last_name, City_ID, User_prof)
 
-  val f2 = new File("/home/ivan/Desktop/SQL_prak/users.csv")
+  val f2 = new File("/home/ivan/Desktop/SQL_prak/users1.csv")
   val writer2 = CSVWriter.open(f2)
 
   val cities_id = (1 to 10).toList
   for (i <- 1 until 1000000) {
     writer2.writeRow(List(i, faker.name().firstName(), faker.name().lastName(),
       random.nextInt(cities_id.length),
-      Map("color" -> faker.color().name(),
-          "job" -> faker.job.title(),
-          "phoneNumber" -> faker.phoneNumber.phoneNumber(),
+      Map("color" -> Seq(faker.color().name(), "")(random.nextInt(2)),
+          "job" -> Seq(faker.job.title(), "")(random.nextInt(2)),
+          "phoneNumber" -> Seq(faker.phoneNumber.phoneNumber(),
+            faker.phoneNumber.phoneNumber(), "")(random.nextInt(3)),
           "nation" -> faker.nation.nationality()).toJson))
   }
   writer2.close()
@@ -61,7 +62,7 @@ object Main extends App {
 
 
   //KVN_Events.csv
-  val f3 = new File("/home/ivan/Desktop/SQL_prak/KVN_Events.csv")
+  val f3 = new File("/home/ivan/Desktop/SQL_prak/KVN_Events1.csv")
   val writer3 = CSVWriter.open(f3)
 
   //val csvSchema = Array(Event_ID, Event_name,
@@ -71,7 +72,7 @@ object Main extends App {
     writer3.writeRow(List(i, faker.esports.event(), faker.starTrek.specie(),
       random.nextInt(10),
       events_array(i)(1),
-      if (events_array(i)(1) == 0) events_array(i)(0) / events_array(i)(1) else 0.0,
+      if (events_array(i)(1) != 0) events_array(i)(0) / events_array(i)(1) else 0.0,
       "{1, 2}", 1))
   }
   writer3.close()
