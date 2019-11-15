@@ -76,15 +76,30 @@ CREATE TABLE Scores (
 
 --FILL IN
 
-COPY Scores(Score_ID, Score, USER_ID, Event_ID, Comments) FROM '/home/ivan/Desktop/SQL_prak/scores.csv' WITH (FORMAT csv); --100 миллионов
+COPY Scores(Score_ID, Score, USER_ID, Event_ID, Comments) FROM '/home/ubuntu/SQL_HOMETASK/scores.csv' WITH (FORMAT csv); --100 миллионов
 
-COPY KVN_Events(Event_ID, Event_name, Description, Game_ID, Amount_scores, Average_score, Teams, Event_type) FROM '/home/ivan/Desktop/SQL_prak/KVN_Events.csv' WITH (FORMAT csv); --миллион
+COPY KVN_Events(Event_ID, Event_name, Description, Game_ID, Amount_scores, Average_score, Teams, Event_type) FROM '/home/ubuntu/SQL_HOMETASK/KVN_Events.csv' WITH (FORMAT csv); --миллион
        
-COPY Users (User_ID, First_name, Last_name, City_ID, User_prof) FROM '/home/ivan/Desktop/SQL_prak/users.csv' WITH (FORMAT csv); --миллион
+COPY Users (User_ID, First_name, Last_name, City_ID, User_prof) FROM '/home/ubuntu/SQL_HOMETASK/users.csv' WITH (FORMAT csv); --миллион
 
 --COPY Games (Game_ID, Game_name, League_name, Date_game, Place_ID, Previous_game_ID, Next_game_ID, Integral_game_score) FROM --'/home/ivan/Desktop/SQL_prak/games.csv' WITH (FORMAT csv);
 
 --COPY Teams (Team_ID, Team_name, University_ID, Captain_ID) FROM '/home/ivan/Desktop/SQL_prak/teames.csv' WITH (FORMAT csv);
+
+INSERT INTO Cities (City_ID, CIty_name, Country) VALUES
+    (1, 'Москва', 'Россия'),
+    (2, 'Эльдорадо', 'Страна кайфа'),
+    (3, 'Капакабана', ''),
+    (4, 'Одесса', 'Украина'),
+    (5, 'Севастополь', 'Россия'),
+    (6, 'Чебоксары', 'Россия'),
+    (7, 'Долгопрудный', 'Россия'),
+    (8, 'Минск', 'Беларусь'),
+    (9, 'Казань', 'Россия'),
+    (10, 'Хайфа', 'Израиль'),
+    (11, 'New York', 'USA'),
+    (0, 'Пятигорск', 'Россия');
+
 
 INSERT INTO Teams (Team_ID, Team_name, Captain_ID) VALUES
     (1, 'Сборная МГУ', 1),
@@ -93,7 +108,7 @@ INSERT INTO Teams (Team_ID, Team_name, Captain_ID) VALUES
     (4, 'Команда КВН город Пятигорск', 3),
     (5, 'Ревва и Галустян', 5),
     (6, 'Соло Гусмана', 7),
-    (7, 'Медведев, Путин и Трамп');
+    (7, 'Медведев, Путин и Трамп', 7);
     
 
  
@@ -124,21 +139,7 @@ INSERT INTO Games (Game_ID, Game_name, League_name, Date_game, Place_ID, Next_ga
     (9, 'Полуфинал 1', 'Российская лига', '01/12/2019', 1, 11),
     (10, 'Полуфинал 2', 'Российская лига', '15/12/2019', 1, 11),
     (11, 'Финал', 'Российская лига', '31/12/2019', 1, NULL);
-
-    
-INSERT INTO Cities (City_ID, CIty_name, Country) VALUES
-    (1, 'Москва', 'Россия'),
-    (2, 'Эльдорадо', 'Страна кайфа'),
-    (3, 'Капакабана', ''),
-    (4, 'Одесса', 'Украина'),
-    (5, 'Севастополь', 'Россия'),
-    (6, 'Чебоксары', 'Россия'),
-    (7, 'Долгопрудный', 'Россия'),
-    (8, 'Минск', 'Беларусь'),
-    (9, 'Казань', 'Россия'),
-    (10, 'Хайфа', 'Израиль'),
-    (11, 'New York', 'USA'),
-    (12, 'Пятигорск', 'Россия');    
+   
 
     
 ALTER TABLE Games ADD 
@@ -159,6 +160,6 @@ ALTER TABLE Scores ADD
  
 ALTER TABLE Users ADD 
     FOREIGN KEY (City_ID)
-    REFERENCES Cities (Cities) ON DELETE RESTRICT ON UPDATE CASCADE;
+    REFERENCES Cities ON DELETE RESTRICT ON UPDATE CASCADE;
     
 
