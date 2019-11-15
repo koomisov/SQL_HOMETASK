@@ -3,9 +3,20 @@ import java.io.{BufferedWriter, File, FileWriter}
 import com.github.tototoshi.csv._
 import spray.json._
 import DefaultJsonProtocol._
-
 import com.github.javafaker.Faker
+
 import scala.util.Random
+
+
+
+case class Profile (color: Option[String], job: Option[String],
+                    phoneNumber: Option[String], nation: Option[String])
+
+object ProfileJsonProtocol extends DefaultJsonProtocol {
+  implicit val sthFormat = jsonFormat4(Profile)
+}
+
+
 
 object Main extends App {
   println("GG")
@@ -47,15 +58,19 @@ object Main extends App {
   val f2 = new File("/home/ubuntu/SQL_HOMETASK/users.csv")
   val writer2 = CSVWriter.open(f2)
 
+
   val cities_id = (0 to 10).toList
+
+  
+  import ProfileJsonProtocol._
   for (i <- 0 until 1000000) {
     writer2.writeRow(List(i, faker.name().firstName(), faker.name().lastName(),
       random.nextInt(cities_id.length),
-      Map("color" -> Seq(faker.color().name(), "")(random.nextInt(2)),
-          "job" -> Seq(faker.job.title(), "")(random.nextInt(2)),
-          "phoneNumber" -> Seq(faker.phoneNumber.phoneNumber(),
-            faker.phoneNumber.phoneNumber(), "")(random.nextInt(3)),
-          "nation" -> faker.nation.nationality()).toJson))
+      Profile(Seq(Some(faker.color().name()), None)(random.nextInt(2)),
+              Seq(Some(faker.job.title()), None)(random.nextInt(2)),
+              Seq(Some(faker.phoneNumber.phoneNumber()),
+                  Some(faker.phoneNumber.phoneNumber()), None)(random.nextInt(3)),
+                  Some(faker.nation.nationality())).toJson))
   }
   writer2.close()
 
