@@ -1,4 +1,4 @@
-import java.io.{BufferedWriter, File, FileWriter}
+import java.io.{File}
 
 import com.github.tototoshi.csv._
 import spray.json._
@@ -8,11 +8,10 @@ import com.github.javafaker.Faker
 import scala.util.Random
 
 
-
 case class Profile (color: Option[String], job: Option[String],
                     phoneNumber: Option[String], nation: Option[String])
 
-object ProfileJsonProtocol extends DefaultJsonProtocol {
+object ProfileJsonProtocol extends DefaultJsonProtocol with NullOptions {
   implicit val sthFormat = jsonFormat4(Profile)
 }
 
@@ -24,28 +23,28 @@ object Main extends App {
   val faker = new Faker
 
   //scores.csv
-  val f1 = new File("/home/ubuntu/SQL_HOMETASK/scores.csv")
+  val f1 = new File("/home/ivan/Desktop/SQL_prak/scores1.csv")
   val writer1 = CSVWriter.open(f1)
   //val csvSchema = Array("Score_ID", "Score", "USER_ID", "Event_ID", "Comments")
 
   val score_values = (1 to 10).toList
   //val users_id = (1 until 1000000).toList
   //val events_range = (1 to 1000000).toList
-  var events_array = Array.ofDim[Int](1000000, 2)
+  var events_array = Array.ofDim[Int](10, 2)
 
-  for (i <- 0 until 1000000; j <- 0 until 2) {
+  for (i <- 0 until 10; j <- 0 until 2) {
     events_array(i)(j) = 0
   }
 
-  for (i <- 0 until 100000000) {
-    val event_id = random.nextInt(1000000)
+  for (i <- 0 until 10) {
+    val event_id = random.nextInt(10)
     val score_value = score_values(random.nextInt(score_values.length))
     events_array(event_id)(0) = events_array(event_id)(0) + score_value
     events_array(event_id)(1) = events_array(event_id)(1) + 1
 
 
     writer1.writeRow(List(i, score_value,
-      random.nextInt(1000000),
+      random.nextInt(10),
       event_id,
       Map("comment1" -> faker.lebowski.actor(), "comment2" -> faker.finance().creditCard()).toJson))
   }
@@ -55,15 +54,15 @@ object Main extends App {
   //users.csv
   //val csvSchema = Array(User_ID, First_name, Last_name, City_ID, User_prof)
 
-  val f2 = new File("/home/ubuntu/SQL_HOMETASK/users.csv")
+  val f2 = new File("/home/ivan/Desktop/SQL_prak/users1.csv")
   val writer2 = CSVWriter.open(f2)
 
 
   val cities_id = (0 to 10).toList
 
-  
+
   import ProfileJsonProtocol._
-  for (i <- 0 until 1000000) {
+  for (i <- 0 until 10) {
     writer2.writeRow(List(i, faker.name().firstName(), faker.name().lastName(),
       random.nextInt(cities_id.length),
       Profile(Seq(Some(faker.color().name()), None)(random.nextInt(2)),
@@ -77,13 +76,13 @@ object Main extends App {
 
 
   //KVN_Events.csv
-  val f3 = new File("/home/ubuntu/SQL_HOMETASK/KVN_Events.csv")
+  val f3 = new File("/home/ivan/Desktop/SQL_prak/KVN_Events1.csv")
   val writer3 = CSVWriter.open(f3)
 
   //val csvSchema = Array(Event_ID, Event_name,
   // Description, Game_ID, Amount_scores, Average_score, Teams, Event_type)
 
-  for (i <- 0 until 1000000) {
+  for (i <- 0 until 10) {
     writer3.writeRow(List(i, faker.esports.event(), faker.starTrek.specie(),
       random.nextInt(10),
       events_array(i)(1),

@@ -9,12 +9,12 @@ CREATE TABLE Cities (
 );
         
         
- CREATE TABLE Users (
+CREATE TABLE Users (
     User_ID INT PRIMARY KEY,
     First_name VARCHAR(50),
     Last_name VARCHAR(50),
     City_ID INT,
-    User_prof TEXT --JSON
+    User_prof jsonb --JSON
 );
 
 
